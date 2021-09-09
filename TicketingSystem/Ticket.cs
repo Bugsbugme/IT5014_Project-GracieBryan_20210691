@@ -6,7 +6,6 @@ namespace TicketingSystem
     {
         //Declare initial attributes
         private static int _nTicketID = 2000;
-        private static int _nUniqueTicketID;
         private static string _strDateTime;
         private static string _strTicketStatus;
         private static string _strIssuerID;
@@ -19,8 +18,7 @@ namespace TicketingSystem
         public Ticket()
         {
             //Define attribute defaults
-            _nTicketID++;
-            _nUniqueTicketID = _nTicketID;
+            _nTicketID ++;
             _strDateTime = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
             _strTicketStatus = "Open";
             _strIssuerID = "Not Specified";
@@ -32,6 +30,7 @@ namespace TicketingSystem
         //Constructor for ID and Description user inputs
         public Ticket(string strUsrSetIssuerID, string strUsrSetIssueDesc)
         {
+            
             _strIssuerID = strUsrSetIssuerID;
             _strIssueDesc = strUsrSetIssueDesc;
         }
@@ -45,29 +44,31 @@ namespace TicketingSystem
             _strIssueDesc = strUsrSetIssueDesc;
         }
 
-        //public void SetIssuerID(int input_IssuerID)
-        //{
-        //    _nIssuerID = input_IssuerID;
-        //}
+        //Set Methods
+        public void SetIssuerID(string strSetIssuerID)
+        {
+            _strIssuerID = strSetIssuerID;
+        }
 
-        //public void SetIssuerName(string input_IssuerName)
-        //{
-        //    _strIssuerName = input_IssuerName;
-        //}
+        public void SetIssuerName(string strSetIssuerName)
+        {
+            _strIssuerName = strSetIssuerName;
+        }
 
-        //public void SetIssuerEmail(string input_IssuerEmail)
-        //{
-        //    _strIssuerEmail = input_IssuerEmail;
-        //}
+        public void SetIssuerEmail(string strSetIssuerEmail)
+        {
+            _strIssuerEmail = strSetIssuerEmail;
+        }
 
-        //public void SetIssuerDesc(string input_issueDesc)
-        //{
-        //    _strIssueDesc = input_issueDesc;
-        //}
+        public void SetIssueDesc(string strSetIssueDesc)
+        {
+            _strIssueDesc = strSetIssueDesc;
+        }
 
+        //Get Methods
         public int GetTicketID()
         {
-            return _nUniqueTicketID;
+            return _nTicketID;
         }
 
         public string GetTicketDateTime()
@@ -102,6 +103,7 @@ namespace TicketingSystem
 
         public void GetTicketInfo()
         {
+            Console.WriteLine();
             Console.WriteLine("------------TICKET INFORMATION------------");
             Console.WriteLine("Ticket Status    : " + GetTicketStatus());
             Console.WriteLine("Ticket Created   : " + GetTicketDateTime());
@@ -111,6 +113,7 @@ namespace TicketingSystem
             Console.WriteLine("Issuer Email     : " + GetIssuerEmail());
             Console.WriteLine("------------ISSUE DESCRIPTION-------------");
             Console.WriteLine(GetIssueDesc());
+            Console.WriteLine("------------------------------------------");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TicketingSystem
 {
@@ -7,40 +8,51 @@ namespace TicketingSystem
     {
         private static void Main(string[] args)
         {
-            List<Ticket> objTicketsList = new List<Ticket>();//Create list to store tickets
+            List<Ticket> listTicketsList = new List<Ticket>();//Create list to store tickets
 
-            //Ticket objDefualtTicket = new();
-            Ticket objTicket = new();//Intialize ticket object
+            string strNewTicket;
+            do
+            {
 
-            //Get input from user
-            Console.Write("Enter your Employee ID: ");
-            string strUsrSetIssuerID = Console.ReadLine();
+                //Get input from user///////////////////////////////////////////////
+                Console.Write("Enter your Employee ID: ");
+                string strUsrSetIssuerID = Console.ReadLine().ToUpper();
 
-            Console.Write("Enter your Name: ");
-            string strUsrSetIssuerName = Console.ReadLine();
+                Console.Write("Enter your Name: ");
+                string tempName = Console.ReadLine().ToLower().ToLower();
+                string strUsrSetIssuerName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tempName);
 
-            Console.Write("Enter your Email Address: ");
-            string strUsrSetIssuerEmail = Console.ReadLine();
+                Console.Write("Enter your Email Address: ");
+                string strUsrSetIssuerEmail = Console.ReadLine();
 
-            Console.Write("Enter a description of the issue you are having: ");
-            string strUsrSetIssueDesc = Console.ReadLine();
+                Console.Write("Enter a description of the issue you are having: ");
+                string strUsrSetIssueDesc = Console.ReadLine();
 
-            //Add user input ticket object
-            //objTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssueDesc);
-            objTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssuerName, strUsrSetIssuerEmail, strUsrSetIssueDesc);
-            
-            //Add ticket to list
-            objTicketsList.Add(objTicket);
+                //Determine which Ticket Constructor to use///////////////////////////////////////////////
+                if (string.IsNullOrEmpty(strUsrSetIssuerName) & (string.IsNullOrEmpty(strUsrSetIssuerEmail)))
+                {
+                    //If no Name and Email is provided, create a partial Ticket
+                    Ticket objTicket = new();
+                    objTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssueDesc);
+                    objTicket.GetTicketInfo();
+                    listTicketsList.Add(objTicket);
+                }
 
-            //Display ticket info
-            objTicket.GetTicketInfo();
+                else
+                {
+                    //If all inputs are provided, create a full Ticket
+                    Ticket objTicket = new();
+                    objTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssuerName, strUsrSetIssuerEmail, strUsrSetIssueDesc);
+                    objTicket.GetTicketInfo();
+                    listTicketsList.Add(objTicket);
+                }
 
-            //Ticket ticket001 = new();//Create new Ticket object
+                Console.WriteLine("Do you want to submit another ticket: ");
+                strNewTicket = Console.ReadLine();
 
-            //ticket001.SetIssuerID();
+            }
+            while ((strNewTicket == "yes") || (strNewTicket == "YES") || (strNewTicket == "y") || (strNewTicket == "Y"));
 
-            ////Print Ticket details
-            //ticket001.GetTicketInfo();
         }
     }
 }
