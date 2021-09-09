@@ -8,12 +8,12 @@ namespace TicketingSystem
     {
         private static void Main(string[] args)
         {
-            List<Ticket> listTicketsList = new List<Ticket>();//Create list to store tickets
+            List<Ticket> lstTicketsList = new();//Create list to store tickets
 
             string strNewTicket;
             do
             {
-                //Get input from user///////////////////////////////////////////////
+                //Get input from user//////////////////////////////////////////////////////////////////////
                 Console.Write("Enter your Employee ID: ");
                 string strUsrSetIssuerID = Console.ReadLine().ToUpper();
 
@@ -34,7 +34,7 @@ namespace TicketingSystem
                     Ticket objTicket = new();
                     objTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssueDesc);
                     objTicket.GetTicketInfo();
-                    listTicketsList.Add(objTicket);
+                    lstTicketsList.Add(objTicket);
                 }
                 else
                 {
@@ -42,7 +42,7 @@ namespace TicketingSystem
                     Ticket objTicket = new();
                     objTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssuerName, strUsrSetIssuerEmail, strUsrSetIssueDesc);
                     objTicket.GetTicketInfo();
-                    listTicketsList.Add(objTicket);
+                    lstTicketsList.Add(objTicket);
                 }
 
                 Console.WriteLine("Do you want to submit another ticket: ");
