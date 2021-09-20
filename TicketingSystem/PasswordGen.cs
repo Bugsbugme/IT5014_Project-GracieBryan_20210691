@@ -4,28 +4,29 @@ namespace TicketingSystem
 {
     internal class PasswordGen
     {
-        
+        //----------------------------------
+        //PASSWORD GENERATOR
+        //----------------------------------
         public static void PasswordGenerator(Ticket ticket)
         {
-            short timeStamp = Convert.ToInt16(DateTime.Now.ToString("HHm"));
+            if (ticket.StrIssueDesc.Contains("Password Change"))
 
-            string keyPart1 = ticket.StrIssuerName.Substring(0, 3);
-            string keyPart2 = ticket.NTicketID.ToString("X");
-            string keyPart3 = timeStamp.ToString("X");
-            string keyFull = keyPart1 + keyPart2 + keyPart3;
-
-            ticket.StrIssueResponse = $"New password generated: {keyFull}";
-        }
-
-        public void PasswordResetCheck(Ticket ticket)
-        {
-            if (ticket.StrIssueDesc.Contains("password change",
-                StringComparison.CurrentCultureIgnoreCase))
             {
-                PasswordGenerator(ticket);
+                //Password is |the first 3 digits of the ticket issuers name
+                //            |+the TicketID converted to Hexidecimal
+                //            |+the first 3 digits of the time stamp converted to Hexidecimal
+
+                string keyPart1 = ticket.StrIssuerName.Substring(0, 3).ToUpper();
+                string keyPart2 = ticket.NTicketID.ToString("X");
+                string keyPart3 = DateTime.Now.Ticks.ToString("X").Substring(0, 3);
+                string password = keyPart1 + keyPart2 + keyPart3;
+
+                //Update The ticket Status to CLOSED and add response
                 ticket.StrTicketStatus = "CLOSED";
-                Console.WriteLine("\r\n*Password Reset request Detected*");
-                Console.WriteLine("A new passwrod has been generated for you and your Support Ticket has been closed.");
+                ticket.StrIssueResponse =
+                    $"\r\n*Password Reset Request Detected*\r\n" +
+                    $"\r\nA new password has been generated for you and your Support Ticket has been closed.\r\n" +
+                    $"\r\nNew password generated: {password}";
             }
         }
     }

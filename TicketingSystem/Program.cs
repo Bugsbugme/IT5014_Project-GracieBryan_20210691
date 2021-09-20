@@ -9,214 +9,628 @@ namespace TicketingSystem
         {
             TicketStats TicketStats = new();
 
-            //----------------------------------
-            //Generate example tickets: First way
-            //----------------------------------
-            //Ticket created with partial constructor
-            Ticket ticket1 = new Ticket("INNAM", "My monitor stopped working");
-            TicketStats.AddNewTicket(ticket1);
-
-            //Ticket created with full constructor
-            Ticket ticket2 = new Ticket("MARIAH", "Maria", "maria@whitecliffe.co.nz", "Request for a videocamera to conduct webinars");
-            TicketStats.AddNewTicket(ticket2);
-
-            //Ticket for password reset
-            Ticket ticket3 = new Ticket("CLOSED", "JOHNS", "John", "john.@whitecliffe.co.nz", "Password Change", "New password generated: JO7D332312F");
-            TicketStats.AddNewTicket(ticket3);
-
-            //----------------------------------
-            //Generate example tickets: Second way
-            //----------------------------------
-            //Ticket created with partial constructor
-            string obj4IssuerID = "BENL";
-            string obj4IssueDesc = "Computer says no...";
-            Ticket ticket4 = new Ticket(obj4IssuerID, obj4IssueDesc);
-            TicketStats.AddNewTicket(ticket4);
-
-            //Ticket created with full constructor
-            string obj5IssuerID = "SARAHM";
-            string obj5IssuerName = "Sarah";
-            string obj5IssuerEmail = "sarah.@whitecliffe.co.nz";
-            string obj5IssueDesc = "I spilled coffee on my keyboard!";
-            Ticket ticket5 = new Ticket(obj5IssuerID, obj5IssuerName, obj5IssuerEmail, obj5IssueDesc);
-            TicketStats.AddNewTicket(ticket5);
-
-            //Ticket for password reset
-            string obj6IssuerID = "PETERH";
-            string obj6IssuerName = "Peter";
-            string obj6IssuerEmail = "peter.@whitecliffe.co.nz";
-            string obj6IssueDesc = "password change";
-            Ticket ticket6 = new Ticket(obj6IssuerID, obj6IssuerName, obj6IssuerEmail, obj6IssueDesc);
-            TicketStats.AddNewTicket(ticket6);
-
-            //Display main menu and wait for further instructions
-            Console.Clear();
-            Console.WriteLine("------------------------------");
-            Console.WriteLine("          :Welcome:           ");
-            Console.WriteLine("------------------------------");
-            TicketStats.DisplayTicketStats();
-            Console.WriteLine("\r\nWhat would you like to do?");
-            Console.WriteLine("\r\n1) Submit new Support Ticket");
-            Console.WriteLine("2) Display Ticket Statistics");
-            Console.WriteLine("3) Display All Tickets");
-            Console.WriteLine("4) Search For TicketID");
-            Console.WriteLine("5) Respond to Ticket");
-            Console.WriteLine("X) Exit Program");
-            Console.Write("\r\nSelect an option: ");
-
-            var userInput = Console.ReadLine().ToUpper();
-            while (true)
+            bool showMenu = true;
+            while (showMenu)
             {
-                switch (userInput)
+                showMenu = MainMenu();
+            }
+
+            bool MainMenu()
+            {
+
+                //Display main menu and wait for further instructions
+                Console.Clear();
+                Console.WriteLine(
+                    "\r\n-----------------------------" +
+                    "\r\n|          WELCOME          |" +
+                    "\r\n-----------------------------");
+
+                TicketStats.DisplayTicketStats();
+
+                Console.WriteLine(
+                    "\r\nWhat would you like to do?" +
+                    "\r\n" +
+                    "\r\n1) Submit New Support Ticket" +
+                    //"\r\n2) Display Ticket Statistics" +
+                    "\r\n2) Display All Tickets..." +
+                    "\r\n3) Search | Respond..." +
+                    "\r\nESC) Exit Program");
+                Console.Write("\r\nSelect an option: ");
+
+                ConsoleKeyInfo menuOption = Console.ReadKey();
+
+                while (true)
                 {
-                    case "1":
+                    switch (menuOption.Key)
+                    {
+                        case ConsoleKey.D1:
+                            //----------------------------
+                            //SUBMIT NEW TICKET
+                            //----------------------------
+                            SubmitNewTicket();
+                            return true;
+
+                        //case ConsoleKey.D2:
+                        //    //----------------------------
+                        //    //DISPLAY TICKET STATISTICS
+                        //    //----------------------------
+                        //    DispayTicketSats();
+                        //    return true;
+
+                        case ConsoleKey.D2:
+                            //----------------------------
+                            //DISPLAY ALL TICKETS
+                            //----------------------------
+                            DisplayAllTickets();
+                            return true;
+
+                        case ConsoleKey.D3:
+                            //----------------------------
+                            //SEARCH | RESPOND
+                            //----------------------------
+                            SearchAndRespond();
+                            return true;
+
+                        case ConsoleKey.Escape:
+                            //----------------------------
+                            //EXIT PROGRAM
+                            //----------------------------
+                            Exit();
+                            return false;                        
+                    }
+
+                    Console.Clear();
+                    Console.WriteLine(
+                        "\r\n-----------------------------" +
+                        "\r\n|          WELCOME          |" +
+                        "\r\n-----------------------------");
+
+                    TicketStats.DisplayTicketStats();
+
+                    Console.WriteLine(
+                        "\r\nWhat would you like to do?" +
+                        "\r\n" +
+                        "\r\n1) Submit New Support Ticket" +
+                        //"\r\n2) Display Ticket Statistics" +
+                        "\r\n2) Display All Tickets..." +
+                        "\r\n3) Search | Respond..." +
+                        "\r\nESC) Exit Program" +
+                        "\r\n" +
+                        "\r\n*Please select one of the given options *");
+                    Console.Write("\r\nSelect an option: ");
+
+                    menuOption = Console.ReadKey();
+                }
+
+                void SubmitNewTicket()
+                {
+                    //----------------------------
+                    //SUBMIT NEW TICKET
+                    //----------------------------
+                    {
+                        //----------------------------------
+                        //Generate example tickets: First way
+                        //----------------------------------
+                        //Ticket created with partial constructor
+                        Ticket ticket1 = new Ticket("INNAM", "My monitor stopped working");
+                        TicketStats.AddNewTicket(ticket1);
+
+                        //Ticket created with full constructor
+                        Ticket ticket2 = new Ticket("MARIAH", "Maria", "maria@whitecliffe.co.nz", "Request for a videocamera to conduct webinars");
+                        TicketStats.AddNewTicket(ticket2);
+
+                        //Ticket for password reset
+                        Ticket ticket3 = new Ticket("CLOSED", "JOHNS", "John", "john.@whitecliffe.co.nz", "Password Change", "New password generated: JO7D332312F");
+                        TicketStats.AddNewTicket(ticket3);
+
+                        //----------------------------------
+                        //Generate example tickets: Second way
+                        //----------------------------------
+                        //Ticket created with partial constructor
+                        string obj4IssuerID = "BENL";
+                        string obj4IssueDesc = "Computer says no...";
+                        Ticket ticket4 = new Ticket(obj4IssuerID, obj4IssueDesc);
+                        TicketStats.AddNewTicket(ticket4);
+
+                        //Ticket created with full constructor
+                        string obj5IssuerID = "SARAHM";
+                        string obj5IssuerName = "Sarah";
+                        string obj5IssuerEmail = "sarah.@whitecliffe.co.nz";
+                        string obj5IssueDesc = "I spilled coffee on my keyboard!";
+                        Ticket ticket5 = new Ticket(obj5IssuerID, obj5IssuerName, obj5IssuerEmail, obj5IssueDesc);
+                        TicketStats.AddNewTicket(ticket5);
+
+                        //Ticket for password reset
+                        string obj6IssuerID = "PETERH";
+                        string obj6IssuerName = "Peter";
+                        string obj6IssuerEmail = "peter.@whitecliffe.co.nz";
+                        string obj6IssueDesc = "password change";
+                        Ticket ticket6 = new Ticket(obj6IssuerID, obj6IssuerName, obj6IssuerEmail, obj6IssueDesc);
+                        TicketStats.AddNewTicket(ticket6);
+
+                        //----------------------------------
+                        //Generate example tickets: Third way
+                        //----------------------------------
+                        //Get input from user
+                        Console.Clear();
+                        Console.WriteLine(
+                            "\r\n-------------------------------" +
+                            "\r\n|  SUBMIT NEW SUPPORT TICKET  |" +
+                            "\r\n-------------------------------");
+
+                        Console.Write("\r\nEnter your Employee ID: ");
+                        string strUsrSetIssuerID = Console.ReadLine().ToUpper();
+
+                        Console.Write("Enter your Name: ");
+                        string strUsrSetIssuerName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                        Console.Write("Enter your Email Address: ");
+                        string strUsrSetIssuerEmail = Console.ReadLine();
+
+                        Console.Write("Enter a description of the issue you are having: ");
+                        string strUsrSetIssueDesc = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                        //Determine which Ticket Constructor to use
+                        if (string.IsNullOrEmpty(strUsrSetIssuerName) & (string.IsNullOrEmpty(strUsrSetIssuerEmail)))
                         {
-                            //----------------------------------
-                            //Generate example tickets: Third way
-                            //----------------------------------
-                            //Get input from user
-                            Console.Clear();
-                            Console.Write("Enter your Employee ID: ");
-                            string strUsrSetIssuerID = Console.ReadLine().ToUpper();
+                            //If no Name and Email is provided, create a partial Ticket
+                            var newTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssueDesc);
 
-                            Console.Write("Enter your Name: ");
-                            string strUsrSetIssuerName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
-                            Console.Write("Enter your Email Address: ");
-                            string strUsrSetIssuerEmail = Console.ReadLine();
+                            //Generate a password if the decription contains the trigger pharase "Password Change"
+                            PasswordGen.PasswordGenerator(newTicket);
 
-                            Console.Write("Enter a description of the issue you are having: ");
-                            string strUsrSetIssueDesc = Console.ReadLine();
-
-                            //Determine which Ticket Constructor to use
-                            if (string.IsNullOrEmpty(strUsrSetIssuerName) & (string.IsNullOrEmpty(strUsrSetIssuerEmail)))
-                            {
-                                //If no Name and Email is provided, create a partial Ticket
-                                //Ticket newTicket = new();
-                                var newTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssueDesc);
-                                TicketStats.AddNewTicket(newTicket);
-                                Console.WriteLine("\r\nYour Support Ticket has been submitted:");
-                                TicketStats.DisplayTicketDetails(newTicket);
-                            }
-                            else
-                            {
-                                //If all inputs are provided, create a full Ticket
-                                //Ticket newTicket = new();
-                                var newTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssuerName, strUsrSetIssuerEmail, strUsrSetIssueDesc);
-                                TicketStats.AddNewTicket(newTicket);
-                                Console.WriteLine("\r\nYour Support Ticket has been submitted:");
-                                TicketStats.DisplayTicketDetails(newTicket);
-                            }
+                            ///Add the new Ticket to the Ticket List and display it
+                            TicketStats.AddNewTicket(newTicket);
                         }
-                        break;
-
-                    case "2":
+                        else
                         {
+                            //If all inputs are provided, create a full Ticket
+                            var newTicket = new Ticket(strUsrSetIssuerID, strUsrSetIssuerName, strUsrSetIssuerEmail, strUsrSetIssueDesc);
+
+                            //Generate a password if the decription contains the trigger pharase "Password Change"
+                            PasswordGen.PasswordGenerator(newTicket);
+
+                            //Add the new Ticket to the Ticket List and display it
+                            TicketStats.AddNewTicket(newTicket);
+                        }
+
+                        Console.WriteLine(
+                            "\r\nR) Return Main Menu" +
+                            "\r\nESC) Exit Program" +
+                            "\r\n");
+                        Console.Write("Select an option: ");
+
+                        ConsoleKeyInfo addMenuOption = Console.ReadKey();
+
+                        while (true)
+                        {
+                            if (addMenuOption.Key == ConsoleKey.R)
+                            {
+                                MainMenu();
+                            }
+
+                            if (addMenuOption.Key == ConsoleKey.Escape)
+                            {
+                                Environment.Exit(0);
+                            }
+
                             Console.Clear();
                             TicketStats.DisplayTicketStats();
-                        }
-                        break;
 
-                    case "3":
-                        {
-                            Console.Clear();
-                            TicketStats.DisplayAllTickets();
-                        }
-                        break;
+                            Console.WriteLine(
+                                "\r\nR) Return to Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n" +
+                                "\r\n*Please select one of the given options*" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
 
-                    case "4":
-                        {
-                            Console.Clear();
-                            Console.Write("Enter the TicketID to search for: ");
-                            int ticketID = Convert.ToInt32(Console.ReadLine());
-                            TicketStats.SearchTicketID(ticketID);
+                            addMenuOption = Console.ReadKey();
                         }
-                        break;
+                    }
+                }
 
-                    case "5":
+                void DispayTicketSats()
+                {
+                    //----------------------------
+                    //DISPLAY TICKET STATISTICS
+                    //----------------------------
+                    {
+                        Console.Clear();
+                        TicketStats.DisplayTicketStats();
+
+                        Console.WriteLine(
+                            "\r\nR) Return Main Menu" +
+                            "\r\nESC) Exit Program" +
+                            "\r\n");
+                        Console.Write("Select an option: ");
+
+                        ConsoleKeyInfo dtsMenuOption = Console.ReadKey();
+
+                        while (true)
                         {
+                            if (dtsMenuOption.Key == ConsoleKey.R)
+                            {
+                                MainMenu();
+                            }
+
+                            if (dtsMenuOption.Key == ConsoleKey.Escape)
+                            {
+                                Environment.Exit(0);
+                            }
+
                             Console.Clear();
                             TicketStats.DisplayTicketStats();
-                            Console.WriteLine("\r\n1) Respond to OPEN Ticket");
-                            Console.WriteLine("2) Reopen CLOSED Ticket");
-                            Console.WriteLine("R) Return Main Menu");
-                            Console.WriteLine("X) Exit Program");
 
-                            userInput = Console.ReadLine().ToUpper();
+                            Console.WriteLine(
+                                "\r\nR) Return to Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n" +
+                                "\r\n*Please select one of the given options*" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
 
-                            while (true)
+                            dtsMenuOption = Console.ReadKey();
+                        }
+                    }
+                }
+
+                void DisplayAllTickets()
+                {
+                    //----------------------------
+                    //DISPLAY ALL TICKETS
+                    //----------------------------
+                    {
+                        Console.Clear();
+
+                        TicketStats.DisplayAllTickets();
+
+                        Console.WriteLine(
+                            "R) Return Main Menu" +
+                            "\r\nESC) Exit Program" +
+                            "\r\n");
+                        Console.Write("Select an option: ");
+
+                        ConsoleKeyInfo dspMenuOption = Console.ReadKey();
+
+                        while (true)
+                        {
+                            if (dspMenuOption.Key == ConsoleKey.D1)
                             {
-                                if (userInput == "1")
+                                Console.WriteLine(
+                                    "\r\n-----------------------------" +
+                                    "\r\n|        OPEN TICKETS       |" +
+                                    "\r\n-----------------------------" +
+                                    "\r\n");
+                                TicketStats.DisplayOpenTickets();
+
+                                Console.WriteLine(
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n");
+                                Console.Write("Select an option: ");
+
+                                dspMenuOption = Console.ReadKey();
+
+                                while (true)
                                 {
-                                    Console.Clear();
+                                    if (dspMenuOption.Key == ConsoleKey.R)
+                                    {
+                                        MainMenu();
+                                    }
+
+                                    if (dspMenuOption.Key == ConsoleKey.Escape)
+                                    {
+                                        Environment.Exit(0);
+                                    }
+
+                                    Console.WriteLine(
+                                    "\r\n-----------------------------" +
+                                    "\r\n|        OPEN TICKETS       |" +
+                                    "\r\n-----------------------------" +
+                                    "\r\n");
                                     TicketStats.DisplayOpenTickets();
-                                    Console.Write("\r\nEnter the TicketID of the Ticket you are responding to: ");
-                                    int ticketID = Convert.ToInt32(Console.ReadLine());
 
-                                    Console.WriteLine("Enter your response below:");
-                                    Console.WriteLine("");
-                                    string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
-                                    TicketStats.UpdateTicketResponse(ticketID, response);
-                                    TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                                    Console.WriteLine(
+                                        "\r\nR) Return Main Menu" +
+                                        "\r\nESC) Exit Program" +
+                                        "\r\n" +
+                                        "" +
+                                        "\r\n*Please select one of the given options*" +
+                                        "");
+                                    Console.Write("Select an option: ");
+
+                                    dspMenuOption = Console.ReadKey();
                                 }
 
-                                if (userInput == "2")
+                            }
+
+                            if (dspMenuOption.Key == ConsoleKey.D2)
+                            {
+                                Console.WriteLine(
+                                    "\r\n-------------------------------" +
+                                    "\r\n|        CLOSED TICKETS       |" +
+                                    "\r\n-------------------------------" +
+                                    "\r\n");
+                                TicketStats.DisplayClosedTickets();
+
+                                Console.WriteLine(
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n");
+                                Console.Write("Select an option: ");
+
+                                dspMenuOption = Console.ReadKey();
+
+                                while (true)
                                 {
-                                    Console.Clear();
+                                    if (dspMenuOption.Key == ConsoleKey.R)
+                                    {
+                                        MainMenu();
+                                    }
+
+                                    if (dspMenuOption.Key == ConsoleKey.Escape)
+                                    {
+                                        Environment.Exit(0);
+                                    }
+
+                                    Console.WriteLine(
+                                    "\r\n-------------------------------" +
+                                    "\r\n|        CLOSED TICKETS       |" +
+                                    "\r\n-------------------------------" +
+                                    "\r\n");
                                     TicketStats.DisplayClosedTickets();
-                                    Console.Write("\r\nEnter the TicketID of the Ticket you want to Reopen: ");
-                                    int ticketID = (Convert.ToInt32(Console.ReadLine()));
-                                    TicketStats.UpdateTicketStatus(ticketID, "OPEN");
+
+                                    Console.WriteLine(
+                                        "\r\nR) Return Main Menu" +
+                                        "\r\nESC) Exit Program" +
+                                        "\r\n" +
+                                        "" +
+                                        "\r\n*Please select one of the given options*" +
+                                        "");
+                                    Console.Write("Select an option: ");
+
+                                    dspMenuOption = Console.ReadKey();
                                 }
-                                if (userInput == "R")
+                            }
+
+                            if (dspMenuOption.Key == ConsoleKey.R)
+                            {
+                                MainMenu();
+                            }
+
+                            if (dspMenuOption.Key == ConsoleKey.Escape)
+                            {
+                                Environment.Exit(0);
+                            }
+
+                            Console.Clear();
+
+                            TicketStats.DisplayAllTickets();
+
+                            Console.WriteLine(
+                                "R) Return to Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n" +
+                                "\r\n*Please select one of the given options*" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            dspMenuOption = Console.ReadKey();
+                        }
+                    }
+                }
+
+                void SearchAndRespond()
+                {
+                    //----------------------------
+                    //SEARCH | RESPOND
+                    //----------------------------
+                    {
+                        Console.Clear();
+                        Console.WriteLine(
+                            "\r\n------------------------------" +
+                            "\r\n|        TICKET SEARCH       |" +
+                            "\r\n------------------------------");
+
+                        //Capture search term from the user
+                        Console.Write("\r\nEnter the TicketID to search for: ");
+                        int ticketID = Convert.ToInt32(Console.ReadLine());
+                        TicketStats.SearchTicketID(ticketID);
+
+                        //Display menu and wait for further instructions
+                        //Other options are added based on search result
+                        Console.WriteLine(
+                            "R) Return Main Menu" +
+                            "\r\nESC) Exit Program" +
+                            "\r\n");
+                        Console.Write("Select an option: ");
+
+                        ConsoleKeyInfo srchmenuOption = Console.ReadKey();
+
+                        while (TicketStats.SearchTicketID(ticketID) != "invalidInput")
+                        {
+                            if (srchmenuOption.Key == ConsoleKey.D1)
+                            {
+                                SearchAndRespond();
+                            }
+
+                            if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "resultSuccessCLOSED")
+                            {
+                                Console.Clear();
+                                TicketStats.UpdateTicketStatus(ticketID, "OPEN");
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                //Capture the response entry from the user
+                                Console.WriteLine(
+                                    "\r\n" +
+                                    "\r\nEnter your response below:" +
+                                    "\r\n");
+                                string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                                //Update the Ticket Response field and Close it
+                                TicketStats.UpdateTicketResponse(ticketID, response);
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                   "\r\n1) Start New Search" +
+                                   "\r\nR) Return Main Menu" +
+                                   "\r\nESC) Exit Program" +
+                                   "\r\n");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+
+                                if (srchmenuOption.Key == ConsoleKey.D1)
                                 {
-                                    break;
+                                    SearchAndRespond();
                                 }
 
-                                if (userInput == "X")
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
                                 {
                                     Environment.Exit(0);
                                 }
-                                else
-                                {
-                                    Console.Clear();
-                                    Console.Write("*Please select one of the given options*");
-                                    Console.WriteLine("");
-                                    TicketStats.DisplayTicketStats();
-                                    Console.WriteLine("\r\n1) Respond to OPEN Ticket");
-                                    Console.WriteLine("2) Reopen CLOSED Ticket");
-                                    Console.WriteLine("R) Return to Main Menu");
-                                    Console.WriteLine("X) Exit Program");
-
-                                    userInput = Console.ReadLine().ToUpper();
-                                }
-                                break;
                             }
-                        }
-                        break;
 
-                    case "X":
-                        {
-                            Environment.Exit(0);
-                        }
-                        break;
+                            if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "resultSuccessOPEN")
+                            {
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
 
-                    default:
-                        {
+                                //Capture the response entry from the user
+                                Console.WriteLine(
+                                    "\r\n" +
+                                    "\r\nEnter your response below:" +
+                                    "\r\n");
+                                string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                                //Update the Ticket Response field and Close it
+                                TicketStats.UpdateTicketResponse(ticketID, response);
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                   "\r\n1) Start New Search" +
+                                   "\r\nR) Return Main Menu" +
+                                   "\r\nESC) Exit Program" +
+                                   "\r\n");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Environment.Exit(0);
+                                }
+                            }
+
+                            if (srchmenuOption.Key == ConsoleKey.D3 & TicketStats.SearchTicketID(ticketID) == "resultSuccessOPENPW")
+                            {
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+                                //Capture the response entry from the user
+                                Console.WriteLine(
+                                    "\r\n" +
+                                    "\r\nEnter your response below:" +
+                                    "\r\n");
+                                string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                                //Update the Ticket Response field and Close it
+                                TicketStats.UpdateTicketResponse(ticketID, response);
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);                                
+
+                                Console.WriteLine(
+                                   "\r\n1) Generate a New Password for this Ticket" +
+                                   "\r\n2) Start New Search" +
+                                   "\r\nR) Return Main Menu" +
+                                   "\r\nESC) Exit Program" +
+                                   "\r\n");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    TicketStats.GeneratePWManual(ticketID);
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.D2)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Environment.Exit(0);
+                                }
+                            }
+
+                            if (srchmenuOption.Key == ConsoleKey.R)
+                            {
+                                MainMenu();
+                            }
+
+                            if (srchmenuOption.Key == ConsoleKey.Escape)
+                            {
+                                Environment.Exit(0);
+                            }
+
+                            //If the user enters an invalid menu option, show the menu again
                             Console.Clear();
-                            Console.Write("*Please select one of the given options*");
-                        }
-                        break;
-                }
-                Console.WriteLine("\r\nWhat would you like to do?");
-                Console.WriteLine("\r\n1) Submit new Support Ticket");
-                Console.WriteLine("2) Display Ticket Statistics");
-                Console.WriteLine("3) Display All Tickets");
-                Console.WriteLine("4) Search For TicketID");
-                Console.WriteLine("5) Respond to Ticket");
-                Console.WriteLine("X) Exit Program");
-                Console.Write("\r\nSelect an option: ");
+                            Console.WriteLine(
+                                "\r\n------------------------------" +
+                                "\r\n|        TICKET SEARCH       |" +
+                                "\r\n------------------------------");
 
-                userInput = Console.ReadLine().ToUpper();
+                            TicketStats.SearchTicketID(ticketID);
+
+                            Console.WriteLine(
+                                "R) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n" +
+                                "\r\n* Please select one of the given options *" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+                        }
+                    }
+                }
+
+                void Exit()
+                {
+                    //----------------------------
+                    //EXIT PROGRAM
+                    //----------------------------
+                    {
+                        Environment.Exit(0);
+                    }
+                }
             }
         }
     }

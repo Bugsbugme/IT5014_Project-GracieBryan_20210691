@@ -27,7 +27,7 @@ namespace TicketingSystem
             StrIssuerName = "*Not Specified*";
             StrIssuerEmail = "*Not Specified*";
             StrIssueDesc = "*No Details Provided*";
-            StrIssueResponse = "*This ticket is awaiting a response*";
+            StrIssueResponse = "*This Ticket is awaiting a response*";
         }
 
         //Constructor for ID and Description user inputs
@@ -48,6 +48,7 @@ namespace TicketingSystem
             StrIssueDesc = strUsrSetIssueDesc;
         }
 
+        //Constructor for manual ticket creation
         public Ticket(string strTicketStatus, string strIssuerID, string strIssuerName, string strIssuerEmail, string strIssueDesc, string strIssueResponse)
             : this()
         {
