@@ -80,10 +80,18 @@ namespace TicketingSystem
         {
             List<Ticket> closedTickets = TicketList.FindAll(t => t.StrTicketStatus == "CLOSED").ToList();
 
+            Console.WriteLine(
+                "\r\n-------------------------------" +
+                "\r\n|        CLOSED TICKETS       |" +
+                "\r\n-------------------------------" +
+                "\r\n");
+
             foreach (Ticket ticket in closedTickets)
             {
                 DisplayTicketDetails(ticket);
             }
+
+            Console.WriteLine("\r\n1) Display All Tickets");
         }
 
         //Method for displaying open tickets
@@ -91,10 +99,18 @@ namespace TicketingSystem
         {
             List<Ticket> openTickets = TicketList.FindAll(t => t.StrTicketStatus == "OPEN").ToList();
 
+            Console.WriteLine(
+                "\r\n-----------------------------" +
+                "\r\n|        OPEN TICKETS       |" +
+                "\r\n-----------------------------" +
+                "\r\n");
+
             foreach (Ticket ticket in openTickets)
             {
                 DisplayTicketDetails(ticket);
             }
+
+            Console.WriteLine("\r\n1) Display All Tickets");
         }
 
         //Method displaying a specific ticket

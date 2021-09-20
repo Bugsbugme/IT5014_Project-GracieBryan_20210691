@@ -297,14 +297,11 @@ namespace TicketingSystem
                         {
                             if (dspMenuOption.Key == ConsoleKey.D1)
                             {
-                                Console.WriteLine(
-                                    "\r\n-----------------------------" +
-                                    "\r\n|        OPEN TICKETS       |" +
-                                    "\r\n-----------------------------" +
-                                    "\r\n");
+                                Console.Clear();
                                 TicketStats.DisplayOpenTickets();
 
                                 Console.WriteLine(
+                                    
                                     "\r\nR) Return Main Menu" +
                                     "\r\nESC) Exit Program" +
                                     "\r\n");
@@ -314,6 +311,11 @@ namespace TicketingSystem
 
                                 while (true)
                                 {
+                                    if (dspMenuOption.Key == ConsoleKey.D1)
+                                    {
+                                        DisplayAllTickets();
+                                    }                                    
+
                                     if (dspMenuOption.Key == ConsoleKey.R)
                                     {
                                         MainMenu();
@@ -324,20 +326,15 @@ namespace TicketingSystem
                                         Environment.Exit(0);
                                     }
 
-                                    Console.WriteLine(
-                                    "\r\n-----------------------------" +
-                                    "\r\n|        OPEN TICKETS       |" +
-                                    "\r\n-----------------------------" +
-                                    "\r\n");
+                                    Console.Clear();
                                     TicketStats.DisplayOpenTickets();
 
-                                    Console.WriteLine(
+                                    Console.WriteLine(                                        
                                         "\r\nR) Return Main Menu" +
-                                        "\r\nESC) Exit Program" +
+                                        "\r\nESC) Exit Program" +                                        
                                         "\r\n" +
-                                        "" +
                                         "\r\n*Please select one of the given options*" +
-                                        "");
+                                        "\r\n");
                                     Console.Write("Select an option: ");
 
                                     dspMenuOption = Console.ReadKey();
@@ -347,14 +344,11 @@ namespace TicketingSystem
 
                             if (dspMenuOption.Key == ConsoleKey.D2)
                             {
-                                Console.WriteLine(
-                                    "\r\n-------------------------------" +
-                                    "\r\n|        CLOSED TICKETS       |" +
-                                    "\r\n-------------------------------" +
-                                    "\r\n");
+                                Console.Clear();
                                 TicketStats.DisplayClosedTickets();
 
                                 Console.WriteLine(
+                                    "\r\n2) Filter OPEN Tickets" +
                                     "\r\nR) Return Main Menu" +
                                     "\r\nESC) Exit Program" +
                                     "\r\n");
@@ -364,6 +358,11 @@ namespace TicketingSystem
 
                                 while (true)
                                 {
+                                    if (dspMenuOption.Key == ConsoleKey.D1)
+                                    {
+                                        DisplayAllTickets();
+                                    }
+
                                     if (dspMenuOption.Key == ConsoleKey.R)
                                     {
                                         MainMenu();
@@ -374,20 +373,15 @@ namespace TicketingSystem
                                         Environment.Exit(0);
                                     }
 
-                                    Console.WriteLine(
-                                    "\r\n-------------------------------" +
-                                    "\r\n|        CLOSED TICKETS       |" +
-                                    "\r\n-------------------------------" +
-                                    "\r\n");
+                                    Console.Clear();
                                     TicketStats.DisplayClosedTickets();
 
                                     Console.WriteLine(
                                         "\r\nR) Return Main Menu" +
                                         "\r\nESC) Exit Program" +
                                         "\r\n" +
-                                        "" +
                                         "\r\n*Please select one of the given options*" +
-                                        "");
+                                        "\r\n");
                                     Console.Write("Select an option: ");
 
                                     dspMenuOption = Console.ReadKey();
