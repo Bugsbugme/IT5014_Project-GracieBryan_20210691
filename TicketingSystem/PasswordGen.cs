@@ -9,7 +9,7 @@ namespace TicketingSystem
         //----------------------------------
         public static void PasswordGenerator(Ticket ticket)
         {
-            if (ticket.StrIssueDesc.Contains("Password Change"))
+            if (ticket.StrIssueDesc.Contains("Password Change", StringComparison.CurrentCultureIgnoreCase))
 
             {
                 //Password is |the first 3 digits of the ticket issuers name
@@ -21,11 +21,10 @@ namespace TicketingSystem
                 string keyPart3 = DateTime.Now.Ticks.ToString("X").Substring(0, 3);
                 string password = keyPart1 + keyPart2 + keyPart3;
 
-                //Update The ticket Status to CLOSED and add response
-                ticket.StrTicketStatus = "CLOSED";
+                //Update the ticket response
                 ticket.StrIssueResponse =
-                    $"\r\n*Password Reset Request Detected*\r\n" +
-                    $"\r\nA new password has been generated for you and your Support Ticket has been closed.\r\n" +
+                    $"*Password Reset Request Detected*\r\n" +
+                    $"\r\nA new password has been generated for you.\r\n" +
                     $"\r\nNew password generated: {password}";
             }
         }
