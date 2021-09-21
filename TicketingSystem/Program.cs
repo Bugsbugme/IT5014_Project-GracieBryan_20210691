@@ -9,6 +9,7 @@ namespace TicketingSystem
         {
             TicketStats TicketStats = new();
 
+            //Start the Main Menu
             bool showMenu = true;
             while (showMenu)
             {
@@ -30,7 +31,6 @@ namespace TicketingSystem
                     "\r\nWhat would you like to do?" +
                     "\r\n" +
                     "\r\n1) Submit New Support Ticket" +
-                    //"\r\n2) Display Ticket Statistics" +
                     "\r\n2) Display All Tickets..." +
                     "\r\n3) Search | Respond..." +
                     "\r\nESC) Exit Program");
@@ -48,13 +48,6 @@ namespace TicketingSystem
                             //----------------------------
                             SubmitNewTicket();
                             return true;
-
-                        //case ConsoleKey.D2:
-                        //    //----------------------------
-                        //    //DISPLAY TICKET STATISTICS
-                        //    //----------------------------
-                        //    DispayTicketSats();
-                        //    return true;
 
                         case ConsoleKey.D2:
                             //----------------------------
@@ -78,6 +71,7 @@ namespace TicketingSystem
                             return false;
                     }
 
+                    //Display Main Menu again if user gives invalid input
                     Console.Clear();
                     Console.WriteLine(
                         "\r\n-----------------------------" +
@@ -90,7 +84,6 @@ namespace TicketingSystem
                         "\r\nWhat would you like to do?" +
                         "\r\n" +
                         "\r\n1) Submit New Support Ticket" +
-                        //"\r\n2) Display Ticket Statistics" +
                         "\r\n2) Display All Tickets..." +
                         "\r\n3) Search | Respond..." +
                         "\r\nESC) Exit Program" +
@@ -193,6 +186,7 @@ namespace TicketingSystem
                             TicketStats.AddNewTicket(newTicket);
                         }
 
+                        //Display Menu and wait for input
                         Console.WriteLine(
                             "\r\nR) Return Main Menu" +
                             "\r\nESC) Exit Program" +
@@ -213,9 +207,8 @@ namespace TicketingSystem
                                 Environment.Exit(0);
                             }
 
+                            //Display Menu again if user gives invalid input
                             Console.Clear();
-                            TicketStats.DisplayTicketStats();
-
                             Console.WriteLine(
                                 "\r\nR) Return to Main Menu" +
                                 "\r\nESC) Exit Program" +
@@ -229,51 +222,6 @@ namespace TicketingSystem
                     }
                 }
 
-                void DispayTicketSats()
-                {
-                    //----------------------------
-                    //DISPLAY TICKET STATISTICS
-                    //----------------------------
-                    {
-                        Console.Clear();
-                        TicketStats.DisplayTicketStats();
-
-                        Console.WriteLine(
-                            "\r\nR) Return Main Menu" +
-                            "\r\nESC) Exit Program" +
-                            "\r\n");
-                        Console.Write("Select an option: ");
-
-                        ConsoleKeyInfo dtsMenuOption = Console.ReadKey();
-
-                        while (true)
-                        {
-                            if (dtsMenuOption.Key == ConsoleKey.R)
-                            {
-                                MainMenu();
-                            }
-
-                            if (dtsMenuOption.Key == ConsoleKey.Escape)
-                            {
-                                Environment.Exit(0);
-                            }
-
-                            Console.Clear();
-                            TicketStats.DisplayTicketStats();
-
-                            Console.WriteLine(
-                                "\r\nR) Return to Main Menu" +
-                                "\r\nESC) Exit Program" +
-                                "\r\n" +
-                                "\r\n*Please select one of the given options*" +
-                                "\r\n");
-                            Console.Write("Select an option: ");
-
-                            dtsMenuOption = Console.ReadKey();
-                        }
-                    }
-                }
-
                 void DisplayAllTickets()
                 {
                     //----------------------------
@@ -281,9 +229,9 @@ namespace TicketingSystem
                     //----------------------------
                     {
                         Console.Clear();
-
                         TicketStats.DisplayAllTickets();
 
+                        //Display Menu and wait for input
                         Console.WriteLine(
                             "R) Return Main Menu" +
                             "\r\nESC) Exit Program" +
@@ -294,11 +242,13 @@ namespace TicketingSystem
 
                         while (true)
                         {
+                            //Display Open Tickets
                             if (dspMenuOption.Key == ConsoleKey.D1)
                             {
                                 Console.Clear();
                                 TicketStats.DisplayOpenTickets();
 
+                                //Display Menu and wait for input
                                 Console.WriteLine(
                                     "R) Return Main Menu" +
                                     "\r\nESC) Exit Program" +
@@ -340,11 +290,13 @@ namespace TicketingSystem
                                 }
                             }
 
+                            //Display CLOSED Tickets
                             if (dspMenuOption.Key == ConsoleKey.D2)
                             {
                                 Console.Clear();
                                 TicketStats.DisplayClosedTickets();
 
+                                //Display Menu and wait for input
                                 Console.WriteLine(
                                     "2) Filter OPEN Tickets" +
                                     "\r\nR) Return Main Menu" +
@@ -447,6 +399,8 @@ namespace TicketingSystem
                         {
                             Exit();
                         }
+
+                        //Determine Menu options and actions based on Ticket details
 
                         if (srchmenuOption.Key == ConsoleKey.D1 & TicketStats.SearchTicketID(ticketID) == "CLOSED")
                         {
