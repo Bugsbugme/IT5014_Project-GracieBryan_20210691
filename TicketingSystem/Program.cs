@@ -17,7 +17,6 @@ namespace TicketingSystem
 
             bool MainMenu()
             {
-
                 //Display main menu and wait for further instructions
                 Console.Clear();
                 Console.WriteLine(
@@ -76,7 +75,7 @@ namespace TicketingSystem
                             //EXIT PROGRAM
                             //----------------------------
                             Exit();
-                            return false;                        
+                            return false;
                     }
 
                     Console.Clear();
@@ -301,8 +300,7 @@ namespace TicketingSystem
                                 TicketStats.DisplayOpenTickets();
 
                                 Console.WriteLine(
-                                    
-                                    "\r\nR) Return Main Menu" +
+                                    "R) Return Main Menu" +
                                     "\r\nESC) Exit Program" +
                                     "\r\n");
                                 Console.Write("Select an option: ");
@@ -313,8 +311,9 @@ namespace TicketingSystem
                                 {
                                     if (dspMenuOption.Key == ConsoleKey.D1)
                                     {
+                                        Console.Clear();
                                         DisplayAllTickets();
-                                    }                                    
+                                    }
 
                                     if (dspMenuOption.Key == ConsoleKey.R)
                                     {
@@ -329,9 +328,9 @@ namespace TicketingSystem
                                     Console.Clear();
                                     TicketStats.DisplayOpenTickets();
 
-                                    Console.WriteLine(                                        
-                                        "\r\nR) Return Main Menu" +
-                                        "\r\nESC) Exit Program" +                                        
+                                    Console.WriteLine(
+                                        "R) Return Main Menu" +
+                                        "\r\nESC) Exit Program" +
                                         "\r\n" +
                                         "\r\n*Please select one of the given options*" +
                                         "\r\n");
@@ -339,7 +338,6 @@ namespace TicketingSystem
 
                                     dspMenuOption = Console.ReadKey();
                                 }
-
                             }
 
                             if (dspMenuOption.Key == ConsoleKey.D2)
@@ -348,7 +346,7 @@ namespace TicketingSystem
                                 TicketStats.DisplayClosedTickets();
 
                                 Console.WriteLine(
-                                    "\r\n2) Filter OPEN Tickets" +
+                                    "2) Filter OPEN Tickets" +
                                     "\r\nR) Return Main Menu" +
                                     "\r\nESC) Exit Program" +
                                     "\r\n");
@@ -360,6 +358,7 @@ namespace TicketingSystem
                                 {
                                     if (dspMenuOption.Key == ConsoleKey.D1)
                                     {
+                                        Console.Clear();
                                         DisplayAllTickets();
                                     }
 
@@ -377,7 +376,7 @@ namespace TicketingSystem
                                     TicketStats.DisplayClosedTickets();
 
                                     Console.WriteLine(
-                                        "\r\nR) Return Main Menu" +
+                                        "R) Return Main Menu" +
                                         "\r\nESC) Exit Program" +
                                         "\r\n" +
                                         "\r\n*Please select one of the given options*" +
@@ -432,186 +431,548 @@ namespace TicketingSystem
                         int ticketID = Convert.ToInt32(Console.ReadLine());
                         TicketStats.SearchTicketID(ticketID);
 
-                        //Display menu and wait for further instructions
-                        //Other options are added based on search result
-                        Console.WriteLine(
-                            "R) Return Main Menu" +
-                            "\r\nESC) Exit Program" +
-                            "\r\n");
-                        Console.Write("Select an option: ");
-
                         ConsoleKeyInfo srchmenuOption = Console.ReadKey();
 
-                        while (TicketStats.SearchTicketID(ticketID) != "invalidInput")
+                        if (srchmenuOption.Key == ConsoleKey.D1)
                         {
-                            if (srchmenuOption.Key == ConsoleKey.D1)
-                            {
-                                SearchAndRespond();
-                            }
+                            SearchAndRespond();
+                        }
 
-                            if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "resultSuccessCLOSED")
-                            {
-                                Console.Clear();
-                                TicketStats.UpdateTicketStatus(ticketID, "OPEN");
-                                TicketStats.DisplayThisTicket(ticketID);
+                        if (srchmenuOption.Key == ConsoleKey.R)
+                        {
+                            MainMenu();
+                        }
 
-                                //Capture the response entry from the user
-                                Console.WriteLine(
-                                    "\r\n" +
-                                    "\r\nEnter your response below:" +
-                                    "\r\n");
-                                string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+                        if (srchmenuOption.Key == ConsoleKey.Escape)
+                        {
+                            Exit();
+                        }
 
-                                //Update the Ticket Response field and Close it
-                                TicketStats.UpdateTicketResponse(ticketID, response);
-
-                                Console.Clear();
-                                TicketStats.DisplayThisTicket(ticketID);
-
-                                Console.WriteLine(
-                                   "\r\n1) Start New Search" +
-                                   "\r\nR) Return Main Menu" +
-                                   "\r\nESC) Exit Program" +
-                                   "\r\n");
-                                Console.Write("Select an option: ");
-
-                                srchmenuOption = Console.ReadKey();
-
-                                if (srchmenuOption.Key == ConsoleKey.D1)
-                                {
-                                    SearchAndRespond();
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.R)
-                                {
-                                    MainMenu();
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.Escape)
-                                {
-                                    Environment.Exit(0);
-                                }
-                            }
-
-                            if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "resultSuccessOPEN")
-                            {
-                                Console.Clear();
-                                TicketStats.DisplayThisTicket(ticketID);
-
-                                //Capture the response entry from the user
-                                Console.WriteLine(
-                                    "\r\n" +
-                                    "\r\nEnter your response below:" +
-                                    "\r\n");
-                                string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
-
-                                //Update the Ticket Response field and Close it
-                                TicketStats.UpdateTicketResponse(ticketID, response);
-
-                                Console.Clear();
-                                TicketStats.DisplayThisTicket(ticketID);
-
-                                Console.WriteLine(
-                                   "\r\n1) Start New Search" +
-                                   "\r\nR) Return Main Menu" +
-                                   "\r\nESC) Exit Program" +
-                                   "\r\n");
-                                Console.Write("Select an option: ");
-
-                                srchmenuOption = Console.ReadKey();
-
-                                if (srchmenuOption.Key == ConsoleKey.D1)
-                                {
-                                    SearchAndRespond();
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.R)
-                                {
-                                    MainMenu();
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.Escape)
-                                {
-                                    Environment.Exit(0);
-                                }
-                            }
-
-                            if (srchmenuOption.Key == ConsoleKey.D3 & TicketStats.SearchTicketID(ticketID) == "resultSuccessOPENPW")
-                            {
-                                Console.Clear();
-                                TicketStats.DisplayThisTicket(ticketID);
-                                //Capture the response entry from the user
-                                Console.WriteLine(
-                                    "\r\n" +
-                                    "\r\nEnter your response below:" +
-                                    "\r\n");
-                                string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
-
-                                //Update the Ticket Response field and Close it
-                                TicketStats.UpdateTicketResponse(ticketID, response);
-
-                                Console.Clear();
-                                TicketStats.DisplayThisTicket(ticketID);                                
-
-                                Console.WriteLine(
-                                   "\r\n1) Generate a New Password for this Ticket" +
-                                   "\r\n2) Start New Search" +
-                                   "\r\nR) Return Main Menu" +
-                                   "\r\nESC) Exit Program" +
-                                   "\r\n");
-                                Console.Write("Select an option: ");
-
-                                srchmenuOption = Console.ReadKey();
-
-                                if (srchmenuOption.Key == ConsoleKey.D1)
-                                {
-                                    TicketStats.GeneratePWManual(ticketID);
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.D2)
-                                {
-                                    SearchAndRespond();
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.R)
-                                {
-                                    MainMenu();
-                                }
-
-                                if (srchmenuOption.Key == ConsoleKey.Escape)
-                                {
-                                    Environment.Exit(0);
-                                }
-                            }
-
-                            if (srchmenuOption.Key == ConsoleKey.R)
-                            {
-                                MainMenu();
-                            }
-
-                            if (srchmenuOption.Key == ConsoleKey.Escape)
-                            {
-                                Environment.Exit(0);
-                            }
-
-                            //If the user enters an invalid menu option, show the menu again
+                        if (srchmenuOption.Key == ConsoleKey.D1 & TicketStats.SearchTicketID(ticketID) == "CLOSED")
+                        {
                             Console.Clear();
-                            Console.WriteLine(
-                                "\r\n------------------------------" +
-                                "\r\n|        TICKET SEARCH       |" +
-                                "\r\n------------------------------");
+                            TicketStats.UpdateTicketStatus(ticketID, "OPEN");
+                            TicketStats.DisplayThisTicket(ticketID);
 
-                            TicketStats.SearchTicketID(ticketID);
+                            //Capture the response entry from the user
+                            Console.WriteLine(
+                                "\r\nEnter your response below:" +
+                                "\r\n");
+                            string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                            //Update the Ticket Response field and display the updated ticket
+                            TicketStats.UpdateTicketResponse(ticketID, response);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
 
                             Console.WriteLine(
-                                "R) Return Main Menu" +
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
                                 "\r\nESC) Exit Program" +
-                                "\r\n" +
-                                "\r\n* Please select one of the given options *" +
                                 "\r\n");
                             Console.Write("Select an option: ");
 
                             srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "CLOSED")
+                        {
+                            Console.Clear();
+                            TicketStats.UpdateTicketStatus(ticketID, "OPEN");
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Capture the response entry from the user
+                            Console.WriteLine(
+                                "\r\nEnter your response below:" +
+                                "\r\n");
+                            string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                            //Update the Ticket Response field and display the updated ticket
+                            TicketStats.UpdateTicketResponse(ticketID, response);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {                                
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "CLOSED+PW")
+                        {
+                            Console.Clear();
+                            TicketStats.UpdateTicketStatus(ticketID, "OPEN");
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Capture the response entry from the user
+                            Console.WriteLine(
+                                "\r\nEnter your response below:" +
+                                "\r\n");
+                            string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                            //Update the Ticket Response field and display the updated ticket
+                            Console.Clear();
+                            TicketStats.UpdateTicketResponse(ticketID, response);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D3 & TicketStats.SearchTicketID(ticketID) == "CLOSED+PW")
+                        {
+                            Console.Clear();
+                            TicketStats.GeneratePWManual(ticketID);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D1 & TicketStats.SearchTicketID(ticketID) == "OPEN")
+                        {
+                            Console.Clear();
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Capture the response entry from the user
+                            Console.WriteLine(
+                                "\r\nEnter your response below:" +
+                                "\r\n");
+                            string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                            //Update the Ticket Response field and display the updated ticket
+                            Console.Clear();
+                            TicketStats.UpdateTicketResponse(ticketID, response);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "OPEN")
+                        {
+                            Console.Clear();
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Capture the response entry from the user
+                            Console.WriteLine(
+                                "\r\nEnter your response below:" +
+                                "\r\n");
+                            string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                            //Update the Ticket Response field and display the updated ticket
+                            TicketStats.UpdateTicketResponse(ticketID, response);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D2 & TicketStats.SearchTicketID(ticketID) == "OPEN+PW")
+                        {
+                            Console.Clear();
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Capture the response entry from the user
+                            Console.WriteLine(
+                                "\r\nEnter your response below:" +
+                                "\r\n");
+                            string response = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+
+                            //Update the Ticket Response field and display the updated ticket
+                            TicketStats.UpdateTicketResponse(ticketID, response);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
+                        }
+
+                        if (srchmenuOption.Key == ConsoleKey.D3 & TicketStats.SearchTicketID(ticketID) == "OPEN+PW")
+                        {
+                            Console.Clear();
+                            TicketStats.GeneratePWManual(ticketID);
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            //Ask the user if the Ticket Status should be updated
+                            Console.Write("\r\nShould the Ticket Status be updated to CLOSED? (Y|N): ");
+                            srchmenuOption = Console.ReadKey();
+
+                            Console.Clear();
+                            if (srchmenuOption.Key == ConsoleKey.Y)
+                            {
+                                TicketStats.UpdateTicketStatus(ticketID, "CLOSED");
+                            }
+
+                            TicketStats.DisplayThisTicket(ticketID);
+
+                            Console.WriteLine(
+                                "\r\n1) Start a New Search" +
+                                "\r\nR) Return Main Menu" +
+                                "\r\nESC) Exit Program" +
+                                "\r\n");
+                            Console.Write("Select an option: ");
+
+                            srchmenuOption = Console.ReadKey();
+
+                            while (true)
+                            {
+                                if (srchmenuOption.Key == ConsoleKey.D1)
+                                {
+                                    SearchAndRespond();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.R)
+                                {
+                                    MainMenu();
+                                }
+
+                                if (srchmenuOption.Key == ConsoleKey.Escape)
+                                {
+                                    Exit();
+                                }
+
+                                Console.Clear();
+                                TicketStats.DisplayThisTicket(ticketID);
+
+                                Console.WriteLine(
+                                    "\r\n1) Start a New Search" +
+                                    "\r\nR) Return Main Menu" +
+                                    "\r\nESC) Exit Program" +
+                                    "\r\n" +
+                                    "\r\n* Please select one of the given options *" +
+                                    "\r\n ");
+                                Console.Write("Select an option: ");
+
+                                srchmenuOption = Console.ReadKey();
+                            }
                         }
                     }
                 }

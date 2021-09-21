@@ -16,7 +16,8 @@ namespace TicketingSystem
                 $"\r\n|          TICKET INFORMATION          |" +
                 $"\r\n----------------------------------------" +
                 $"\r\n" +
-                $"\r\n|{ticket.StrTicketStatus}|" +
+                $"\r\nTICKET STATUS" +
+                $"\r\n*{ticket.StrTicketStatus}*" +
                 $"\r\n" +
                 $"\r\nTicket Created   : {ticket.StrDateTime}" +
                 $"\r\nTicket ID        : {ticket.NTicketID}" +
@@ -28,6 +29,7 @@ namespace TicketingSystem
                 $"\r\n" +
                 $"\r\n{ticket.StrIssueDesc}" +
                 $"\r\n----------------------------------------" +
+                $"\r\n" +
                 $"\r\nISSUE RESPONSE--------------------------" +
                 $"\r\n" +
                 $"\r\n{ticket.StrIssueResponse}" +
@@ -38,7 +40,7 @@ namespace TicketingSystem
         public void AddNewTicket(Ticket ticket)
         {
             TicketList.Add(ticket);
-            
+
             Console.Clear();
             DisplayTicketDetails(ticket);
 
@@ -62,7 +64,6 @@ namespace TicketingSystem
                     "\r\nThere are currently no Tickets" +
                     "\r\n");
             }
-
             else
             {
                 foreach (Ticket ticket in TicketList)
@@ -83,8 +84,7 @@ namespace TicketingSystem
             Console.WriteLine(
                 "\r\n-------------------------------" +
                 "\r\n|        CLOSED TICKETS       |" +
-                "\r\n-------------------------------" +
-                "\r\n");
+                "\r\n-------------------------------");
 
             foreach (Ticket ticket in closedTickets)
             {
@@ -102,8 +102,7 @@ namespace TicketingSystem
             Console.WriteLine(
                 "\r\n-----------------------------" +
                 "\r\n|        OPEN TICKETS       |" +
-                "\r\n-----------------------------" +
-                "\r\n");
+                "\r\n-----------------------------");
 
             foreach (Ticket ticket in openTickets)
             {
@@ -160,55 +159,84 @@ namespace TicketingSystem
         //Method to search for a specific ticket ID
         public string SearchTicketID(int ticketID)
         {
-            Ticket ticket = TicketList.FirstOrDefault(t => t.NTicketID == ticketID);            
+            Ticket ticket = TicketList.FirstOrDefault(t => t.NTicketID == ticketID);
 
             if (ticket == null)
             {
                 Console.WriteLine(
                     "\r\nNo ticket with that ID was found" +
-                    "\r\n" +
-                    "\r\n1) Start New Search");
+                    "\r\n1) Start New Search" +
+                    "\r\nR) Return Main Menu" +
+                    "\r\nESC) Exit Program" +
+                    "\r\n");
+                Console.Write("Select an option: ");
 
-                return "resultNULL";
+                return "NOTFOUND";
             }
 
-            if (ticket != null & ticket.StrTicketStatus == "OPEN")
+            if (ticket.StrTicketStatus == "CLOSED" & ticket.StrIssueDesc.Contains("Password Change", StringComparison.CurrentCultureIgnoreCase))
             {
                 DisplayTicketDetails(ticket);
 
                 Console.WriteLine(
                     "\r\n1) Start New Search" +
-                    "\r\n2) Issue Response to this Ticket");
+                    "\r\n2) Reopen and Respond to this Ticket" +
+                    "\r\n3) Generate New Password for this Ticket" +
+                    "\r\nR) Return Main Menu" +
+                    "\r\nESC) Exit Program" +
+                    "\r\n");
+                Console.Write("Select an option: ");
 
-                return "resultSuccessOPEN";
+                return "CLOSED+PW";
             }
 
-            if (ticket != null & ticket.StrTicketStatus == "OPEN" & ticket.StrIssueDesc.Contains("Password Change"))
+            if (ticket.StrTicketStatus == "CLOSED")
+            {
+                DisplayTicketDetails(ticket);
+
+                Console.WriteLine(
+                    "\r\n1) Start New Search" +
+                    "\r\n2) Reopen and Respond to this Ticket" +
+                    "\r\nR) Return Main Menu" +
+                    "\r\nESC) Exit Program" +
+                    "\r\n");
+                Console.Write("Select an option: ");
+
+                return "CLOSED";
+            }
+
+            if (ticket.StrTicketStatus == "OPEN" & ticket.StrIssueDesc.Contains("Password Change", StringComparison.CurrentCultureIgnoreCase))
             {
                 DisplayTicketDetails(ticket);
 
                 Console.WriteLine(
                     "\r\n1) Start New Search" +
                     "\r\n2) Issue Response to this Ticket" +
-                    "\r\n3) Generate New Password for this Ticket");
+                    "\r\n3) Generate New Password for this Ticket" +
+                    "\r\nR) Return Main Menu" +
+                    "\r\nESC) Exit Program" +
+                    "\r\n");
+                Console.Write("Select an option: ");
 
-                return "resultSuccessOPENPW";
+                return "OPEN+PW";
             }
 
-            if (ticket != null & ticket.StrTicketStatus == "CLOSED")
+            if (ticket.StrTicketStatus == "OPEN")
             {
                 DisplayTicketDetails(ticket);
 
                 Console.WriteLine(
                     "\r\n1) Start New Search" +
-                    "\r\n2) Reopen and Respond to this Ticket");
+                    "\r\n2) Issue Response to this Ticket" +
+                    "\r\nR) Return Main Menu" +
+                    "\r\nESC) Exit Program" +
+                    "\r\n");
+                Console.Write("Select an option: ");
 
-                return "resultSuccessCLOSED";
+                return "OPEN";
             }
             else
             {
-                Console.WriteLine("\r\n1) Start New Search");
-
                 return "invalidInput";
             }
         }
@@ -222,12 +250,9 @@ namespace TicketingSystem
                 if (ticket.NTicketID == ticketID)
                 {
                     ticket.StrIssueResponse = newValue;
-                    ticket.StrTicketStatus = "CLOSED";
 
-                    Console.WriteLine(
-                        $"\r\nYour response has been added" +
-                        $"\r\n" +
-                        $"\r\nThe Ticket Status has been Updated and is now: {ticket.StrTicketStatus}");
+                    Console.Clear();
+                    Console.WriteLine($"\r\nYour response has been added");
 
                     break;
                 }
@@ -244,11 +269,10 @@ namespace TicketingSystem
                 {
                     ticket.StrTicketStatus = newValue;
 
+                    Console.Clear();
                     Console.WriteLine(
                         $"\r\nThe Ticket Status has been Updated and is now: " +
                         $"\r\n{ticket.StrTicketStatus}");
-
-                    DisplayTicketDetails(ticket);
 
                     break;
                 }
